@@ -113,8 +113,8 @@ bot.onText(/\/start/, (msg) => {
     `✅ *What I can do:*\n` +
     `• Search news by keyword\n` +
     `• Show trending topics\n` +
-    `• Find latest articles from top sources\n\n` +
-    `📣 Updates: @newsbot`;
+    `• Find latest articles from top sources\n\n` 
+
 
   bot.sendMessage(chatId, welcomeText, { parse_mode: "Markdown" });
 
