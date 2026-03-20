@@ -3,11 +3,21 @@ const TelegramBot = require("node-telegram-bot-api");
 // ============================
 // 🤖 ALL BOT TOKENS
 // ============================
-const MAIN_TOKEN    = process.env.BOT_TOKEN;         // Main bot (from Railway variable)
+const MAIN_TOKEN    = process.env.BOT_TOKEN;
 const AI_TOKEN      = "8716836493:AAFJN9G0IiGbD4RYdMDp2CPbwlDMNskfWh8";
 const BITCOIN_TOKEN = "8621803468:AAE1dADgxFHSiwCWmOPWwS6pAl4S4Tp8ACE";
 const TESLA_TOKEN   = "8382399883:AAEeqNC05j6jL3WcgcbI1RqO7zqsIELiuxo";
 const OPENAI_TOKEN  = "8749342231:AAEAhhCS_xL2Wdh3bBKbQn2Gm3EqBwfVHwQ";
+
+// ============================
+// 🖼️ TOPIC IMAGES
+// ============================
+const IMAGES = {
+  ai:      "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
+  bitcoin: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=800&q=80",
+  tesla:   "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80",
+  openai:  "https://images.unsplash.com/photo-1676299081847-824916de030a?w=800&q=80",
+};
 
 // ============================
 // 🚀 START ALL BOTS
@@ -83,13 +93,6 @@ function getRefreshKeyboard() {
 // ============================
 // 🏠 MAIN BOT
 // ============================
-const TOPIC_BOTS = {
-  "AI News": "AINewsSearch_Bot",
-  "Bitcoin": "BitcoinNewsSearch_Bot",
-  "Tesla":   "TeslaNewsSearch_Bot",
-  "OpenAI":  "OpenAINewsSearch_Bot",
-};
-
 function getMainKeyboard() {
   return {
     inline_keyboard: [
@@ -145,19 +148,23 @@ mainBot.on("message", (msg) => {
 // ============================
 // 🤖 AI NEWS BOT
 // ============================
-aiBot.onText(/\/start/, (msg) => {
+aiBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
-  aiBot.sendMessage(
-    chatId,
-    `🤖 *Welcome to AI News Bot, ${firstName}!*\n\n` +
-    `Stay updated with the latest in Artificial Intelligence.\n\n` +
-    `✅ *What you'll get:*\n` +
-    `• Latest AI research & breakthroughs\n` +
-    `• Big Tech AI updates\n` +
-    `• AI policy & regulation news\n`,
-    { parse_mode: "Markdown" }
-  );
+
+  // Send image + welcome caption
+  await aiBot.sendPhoto(chatId, IMAGES.ai, {
+    caption:
+      `🤖 *Welcome to AI News Bot, ${firstName}!*\n\n` +
+      `Stay updated with the latest in Artificial Intelligence.\n\n` +
+      `✅ *What you'll get:*\n` +
+      `• Latest AI research & breakthroughs\n` +
+      `• Big Tech AI updates\n` +
+      `• AI policy & regulation news\n`,
+    parse_mode: "Markdown",
+  });
+
+  // Send news after image
   setTimeout(() => {
     aiBot.sendMessage(chatId, formatNews(AI_NEWS, "🤖 *Latest AI News*"), {
       parse_mode: "Markdown",
@@ -189,19 +196,23 @@ aiBot.on("message", (msg) => {
 // ============================
 // ₿ BITCOIN BOT
 // ============================
-bitcoinBot.onText(/\/start/, (msg) => {
+bitcoinBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
-  bitcoinBot.sendMessage(
-    chatId,
-    `₿ *Welcome to Bitcoin News Bot, ${firstName}!*\n\n` +
-    `Stay updated with the latest Bitcoin & crypto news.\n\n` +
-    `✅ *What you'll get:*\n` +
-    `• Live Bitcoin price updates\n` +
-    `• Institutional & ETF news\n` +
-    `• Crypto regulation updates\n`,
-    { parse_mode: "Markdown" }
-  );
+
+  // Send image + welcome caption
+  await bitcoinBot.sendPhoto(chatId, IMAGES.bitcoin, {
+    caption:
+      `₿ *Welcome to Bitcoin News Bot, ${firstName}!*\n\n` +
+      `Stay updated with the latest Bitcoin & crypto news.\n\n` +
+      `✅ *What you'll get:*\n` +
+      `• Live Bitcoin price updates\n` +
+      `• Institutional & ETF news\n` +
+      `• Crypto regulation updates\n`,
+    parse_mode: "Markdown",
+  });
+
+  // Send news after image
   setTimeout(() => {
     bitcoinBot.sendMessage(chatId, formatNews(BITCOIN_NEWS, "₿ *Latest Bitcoin News*"), {
       parse_mode: "Markdown",
@@ -233,19 +244,23 @@ bitcoinBot.on("message", (msg) => {
 // ============================
 // 🚗 TESLA BOT
 // ============================
-teslaBot.onText(/\/start/, (msg) => {
+teslaBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
-  teslaBot.sendMessage(
-    chatId,
-    `🚗 *Welcome to Tesla News Bot, ${firstName}!*\n\n` +
-    `Stay updated with the latest Tesla & EV news.\n\n` +
-    `✅ *What you'll get:*\n` +
-    `• Tesla vehicle & product updates\n` +
-    `• Stock & earnings news\n` +
-    `• FSD & technology updates\n`,
-    { parse_mode: "Markdown" }
-  );
+
+  // Send image + welcome caption
+  await teslaBot.sendPhoto(chatId, IMAGES.tesla, {
+    caption:
+      `🚗 *Welcome to Tesla News Bot, ${firstName}!*\n\n` +
+      `Stay updated with the latest Tesla & EV news.\n\n` +
+      `✅ *What you'll get:*\n` +
+      `• Tesla vehicle & product updates\n` +
+      `• Stock & earnings news\n` +
+      `• FSD & technology updates\n`,
+    parse_mode: "Markdown",
+  });
+
+  // Send news after image
   setTimeout(() => {
     teslaBot.sendMessage(chatId, formatNews(TESLA_NEWS, "🚗 *Latest Tesla News*"), {
       parse_mode: "Markdown",
@@ -277,19 +292,23 @@ teslaBot.on("message", (msg) => {
 // ============================
 // 🌐 OPENAI BOT
 // ============================
-openaiBot.onText(/\/start/, (msg) => {
+openaiBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
-  openaiBot.sendMessage(
-    chatId,
-    `🌐 *Welcome to OpenAI News Bot, ${firstName}!*\n\n` +
-    `Stay updated with the latest OpenAI & ChatGPT news.\n\n` +
-    `✅ *What you'll get:*\n` +
-    `• ChatGPT & GPT model updates\n` +
-    `• OpenAI business & funding news\n` +
-    `• AI policy & legal updates\n`,
-    { parse_mode: "Markdown" }
-  );
+
+  // Send image + welcome caption
+  await openaiBot.sendPhoto(chatId, IMAGES.openai, {
+    caption:
+      `🌐 *Welcome to OpenAI News Bot, ${firstName}!*\n\n` +
+      `Stay updated with the latest OpenAI & ChatGPT news.\n\n` +
+      `✅ *What you'll get:*\n` +
+      `• ChatGPT & GPT model updates\n` +
+      `• OpenAI business & funding news\n` +
+      `• AI policy & legal updates\n`,
+    parse_mode: "Markdown",
+  });
+
+  // Send news after image
   setTimeout(() => {
     openaiBot.sendMessage(chatId, formatNews(OPENAI_NEWS, "🌐 *Latest OpenAI News*"), {
       parse_mode: "Markdown",
