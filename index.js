@@ -5,7 +5,7 @@ const TelegramBot = require("node-telegram-bot-api");
 // ============================
 const MAIN_TOKEN    = process.env.BOT_TOKEN;
 const AI_TOKEN      = "8716836493:AAFJN9G0IiGbD4RYdMDp2CPbwlDMNskfWh8";
-const BITCOIN_TOKEN = "8621803468:AAE1dAaDgxFHSiwCWmOPWwS6pAl4S4Tp8ACE";
+const BITCOIN_TOKEN = "8621803468:AAE1dADgxFHSiwCWmOPWwS6pAl4S4Tp8ACE";
 const TESLA_TOKEN   = "8382399883:AAEeqNC05j6jL3WcgcbI1RqO7zqsIELiuxo";
 const OPENAI_TOKEN  = "8749342231:AAEAhhCS_xL2Wdh3bBKbQn2Gm3EqBwfVHwQ";
 
@@ -21,13 +21,50 @@ const IMAGES = {
 };
 
 // ============================
-// 🚀 START ALL BOTS
+// 📢 CHANNEL LISTS
 // ============================
-const mainBot    = new TelegramBot(MAIN_TOKEN,    { polling: true });
-const aiBot      = new TelegramBot(AI_TOKEN,      { polling: true });
-const bitcoinBot = new TelegramBot(BITCOIN_TOKEN, { polling: true });
-const teslaBot   = new TelegramBot(TESLA_TOKEN,   { polling: true });
-const openaiBot  = new TelegramBot(OPENAI_TOKEN,  { polling: true });
+const CHANNELS = {
+  ai: [
+    { name: "🤖 AI News Daily", user: "ainewsdaily", desc: "Latest AI breakthroughs & research", members: "125K" },
+    { name: "🧠 Deep Learning Hub", user: "deeplearninghub", desc: "Deep learning papers & tutorials", members: "89K" },
+    { name: "💡 Tech AI Insider", user: "techaiinsider", desc: "Big Tech AI updates from Google, Meta, Microsoft", members: "210K" },
+    { name: "🔬 AI Research Papers", user: "airesearchpapers", desc: "Daily AI research paper summaries", members: "67K" },
+    { name: "🌐 AI World News", user: "aiworldnews", desc: "Global AI policy & industry news", members: "143K" },
+    { name: "🤖 OpenAI Updates", user: "openaiunews", desc: "Official OpenAI product updates", members: "320K" },
+    { name: "🚀 Future AI", user: "futureai_channel", desc: "AGI progress & future of AI", members: "98K" },
+    { name: "💼 Enterprise AI", user: "enterpriseai", desc: "AI in business & enterprise solutions", members: "54K" },
+  ],
+  bitcoin: [
+    { name: "₿ Bitcoin News", user: "bitcoinnewschannel", desc: "Real-time Bitcoin price & news", members: "450K" },
+    { name: "📈 Crypto Daily", user: "cryptodailynews", desc: "Daily crypto market updates", members: "280K" },
+    { name: "🏦 Institutional Crypto", user: "institutionalcrypto", desc: "ETF, institutional Bitcoin news", members: "95K" },
+    { name: "⚡ Lightning Network", user: "lightningnetworknews", desc: "Bitcoin Lightning updates", members: "43K" },
+    { name: "🌐 DeFi Pulse", user: "defipulsenews", desc: "DeFi protocols & yield farming", members: "167K" },
+    { name: "📊 Crypto Charts", user: "cryptochartsnews", desc: "Technical analysis & price charts", members: "210K" },
+    { name: "🔐 Crypto Security", user: "cryptosecuritynews", desc: "Wallet safety & hack alerts", members: "78K" },
+    { name: "🌍 Crypto Regulation", user: "cryptoregulationnews", desc: "Global crypto laws & compliance", members: "112K" },
+  ],
+  tesla: [
+    { name: "🚗 Tesla News", user: "teslanewschannel", desc: "Latest Tesla vehicle & software updates", members: "340K" },
+    { name: "⚡ EV World", user: "evworldnews", desc: "Electric vehicle industry news", members: "189K" },
+    { name: "🔋 Tesla Battery Tech", user: "teslabatterytech", desc: "Battery innovation & energy news", members: "67K" },
+    { name: "🤖 Tesla FSD Updates", user: "teslafsdnews", desc: "Full Self-Driving software updates", members: "225K" },
+    { name: "📊 Tesla Stock", user: "tslastocknews", desc: "TSLA stock analysis & earnings", members: "143K" },
+    { name: "🏭 Tesla Gigafactory", user: "teslagigafactory", desc: "Gigafactory production updates", members: "89K" },
+    { name: "🚀 Elon Musk News", user: "elonmusknews", desc: "Elon Musk announcements & news", members: "512K" },
+    { name: "🌞 Tesla Solar", user: "teslasolar", desc: "Tesla Solar & Powerwall news", members: "45K" },
+  ],
+  openai: [
+    { name: "🌐 ChatGPT News", user: "chatgptnewschannel", desc: "ChatGPT updates & tips", members: "620K" },
+    { name: "🤖 GPT Updates", user: "gptupdates", desc: "Latest GPT model releases", members: "380K" },
+    { name: "🎨 DALL-E Art", user: "dalleart", desc: "AI art & image generation news", members: "156K" },
+    { name: "💻 OpenAI Developers", user: "openaidev", desc: "API updates & developer news", members: "234K" },
+    { name: "⚖️ AI Ethics & Law", user: "aiethicslaw", desc: "AI regulation & legal updates", members: "87K" },
+    { name: "🔬 AI Research", user: "airesearchnews", desc: "OpenAI research papers & findings", members: "143K" },
+    { name: "🎙️ AI Voice & Audio", user: "aivoicenews", desc: "Whisper, voice AI updates", members: "65K" },
+    { name: "🚀 Sam Altman News", user: "samaltnews", desc: "OpenAI CEO updates & interviews", members: "198K" },
+  ],
+};
 
 // ============================
 // 🔥 TRENDING KEYWORDS
@@ -57,90 +94,40 @@ const OPENAI_KEYWORDS = [
 ];
 
 // ============================
-// 📰 NEWS DATA
+// 🚀 START ALL BOTS
 // ============================
-const NEWS_DATA = {
-  // AI Bot news
-  "gpt-5":      [{ title: "OpenAI Launches GPT-5", source: "The Verge", time: "1h ago", summary: "New model scores 95% on medical licensing exams and writes full apps from scratch." }],
-  "deepmind":   [{ title: "Google DeepMind AlphaFold 3", source: "Nature", time: "3h ago", summary: "New protein folding model solves structures 10x faster than its predecessor." }],
-  "copilot":    [{ title: "Microsoft Copilot Restructuring", source: "Bloomberg", time: "5h ago", summary: "Tech giant announces AI-driven restructuring across support and finance teams." }],
-  "meta ai":    [{ title: "Meta AI Expands Globally", source: "TechCrunch", time: "2h ago", summary: "Meta AI assistant now available in 50+ countries with multilingual support." }],
-  "eu ai act":  [{ title: "EU AI Act Enforcement Begins", source: "Reuters", time: "1d ago", summary: "First fines issued under new regulation targeting high-risk AI systems." }],
-  "alphafold":  [{ title: "AlphaFold Solves 200M Proteins", source: "Nature", time: "2d ago", summary: "DeepMind's model has now mapped nearly every known protein structure on Earth." }],
-  "gemini":     [{ title: "Google Gemini Ultra Launches", source: "Google Blog", time: "4h ago", summary: "Google's most powerful AI model now available to enterprise customers worldwide." }],
-  "claude":     [{ title: "Anthropic Claude 4 Released", source: "Anthropic", time: "6h ago", summary: "New Claude model sets records on coding and reasoning benchmarks." }],
-  "robotics":   [{ title: "Figure AI Robot Walks Autonomously", source: "TechCrunch", time: "3h ago", summary: "Humanoid robot completes complex factory tasks without human assistance." }],
-  "ai safety":  [{ title: "OpenAI Safety Board Formed", source: "Reuters", time: "1d ago", summary: "Independent safety board to oversee all major AI model deployments." }],
-  "llama 3":    [{ title: "Meta Llama 3 Outperforms GPT-4", source: "Meta AI", time: "5h ago", summary: "Open-source model beats proprietary rivals on coding and math tasks." }],
-  "sora":       [{ title: "OpenAI Sora Goes Public", source: "The Verge", time: "2h ago", summary: "AI video generation tool now available to all ChatGPT Plus subscribers." }],
-
-  // Bitcoin bot news
-  "btc price":   [{ title: "Bitcoin Surpasses $120,000", source: "CoinDesk", time: "30m ago", summary: "Institutional buying accelerates as ETF inflows hit $2B in a single day." }],
-  "etf news":    [{ title: "Bitcoin ETF Hits Record Volume", source: "CoinTelegraph", time: "4h ago", summary: "BlackRock's Bitcoin ETF records highest single-day trading volume of $3.5B." }],
-  "halving":     [{ title: "Bitcoin Halving Impact Analysis", source: "Decrypt", time: "1d ago", summary: "Analysts predict supply shock to push BTC above $150K within 6 months." }],
-  "altcoins":    [{ title: "Altcoin Season Begins", source: "CoinDesk", time: "3h ago", summary: "ETH, SOL and BNB surge 20%+ as Bitcoin dominance drops below 50%." }],
-  "ethereum":    [{ title: "Ethereum ETF Approved", source: "Bloomberg", time: "2h ago", summary: "SEC approves spot Ethereum ETF, triggering 15% price surge in 24 hours." }],
-  "binance":     [{ title: "Binance Launches New Features", source: "CoinTelegraph", time: "5h ago", summary: "Exchange adds copy trading and AI portfolio management tools for retail users." }],
-  "regulation":  [{ title: "G20 Crypto Regulation Framework", source: "Reuters", time: "1d ago", summary: "Major economies agree on unified rules for crypto exchanges and stablecoins." }],
-  "mining":      [{ title: "Bitcoin Mining Goes 60% Green", source: "CoinDesk", time: "6h ago", summary: "Report shows majority of Bitcoin mining now powered by renewable energy." }],
-  "lightning":   [{ title: "Lightning Network Hits 10,000 BTC", source: "Decrypt", time: "2d ago", summary: "Bitcoin's payment layer reaches new capacity record as adoption surges." }],
-  "defi":        [{ title: "DeFi Total Value Locked Hits $200B", source: "DeFiPulse", time: "4h ago", summary: "Decentralized finance protocols see massive inflows as crypto bull market continues." }],
-  "nft":         [{ title: "NFT Market Revival in 2026", source: "CoinDesk", time: "1d ago", summary: "NFT trading volume surges 300% as new gaming and music projects launch." }],
-  "web3":        [{ title: "Web3 Adoption Reaches 100M Users", source: "a16z", time: "3h ago", summary: "Crypto wallet users hit milestone as mainstream apps integrate blockchain features." }],
-
-  // Tesla bot news
-  "cybertruck":    [{ title: "Tesla Cybertruck Recall Issued", source: "AP", time: "1h ago", summary: "NHTSA orders recall of 45,000 Cybertrucks over faulty drive assist software." }],
-  "model 3":       [{ title: "Tesla Model 3 Highland Wins Award", source: "Electrek", time: "2h ago", summary: "Model 3 Highland wins European Car of the Year for third consecutive year." }],
-  "fsd":           [{ title: "Tesla FSD Version 13 Released", source: "Electrek", time: "5h ago", summary: "Full Self-Driving update brings major improvements to highway and city navigation." }],
-  "earnings":      [{ title: "Tesla Q1 Deliveries Miss Estimates", source: "WSJ", time: "4h ago", summary: "Company delivers 386,000 vehicles, below analyst expectations of 410,000." }],
-  "gigafactory":   [{ title: "Tesla Gigafactory Saudi Arabia", source: "CNN", time: "6h ago", summary: "Gigafactory planned for Riyadh as part of Vision 2030 investment push." }],
-  "elon musk":     [{ title: "Musk Sells $2B in Tesla Shares", source: "Reuters", time: "1d ago", summary: "SEC filing reveals latest stock sale amid ongoing focus on xAI and SpaceX." }],
-  "model y":       [{ title: "Tesla Model Y Tops Global Sales", source: "Bloomberg", time: "3h ago", summary: "Model Y becomes best-selling car in the world for second consecutive year." }],
-  "roadster":      [{ title: "Tesla Roadster Launch Date Confirmed", source: "Electrek", time: "2d ago", summary: "Tesla CEO confirms new Roadster will launch in late 2026 with 0-60 in 1.1 seconds." }],
-  "supercharger":  [{ title: "Tesla Supercharger Hits 60,000 Stations", source: "Tesla Blog", time: "4h ago", summary: "Tesla's charging network now the largest in the world, covering 110 countries." }],
-  "battery":       [{ title: "Tesla 4680 Battery Achieves 500 Miles", source: "WSJ", time: "5h ago", summary: "New battery cell sets EV industry range record in latest Model S tests." }],
-  "solar":         [{ title: "Tesla Solar Roof Sales Surge", source: "Bloomberg", time: "1d ago", summary: "Solar roof installations up 200% as homeowners seek energy independence." }],
-  "autopilot":     [{ title: "Tesla Autopilot Cleared in Investigation", source: "Reuters", time: "6h ago", summary: "NHTSA closes probe after finding no defect in Tesla's Autopilot system." }],
-
-  // OpenAI bot news
-  "chatgpt":    [{ title: "ChatGPT Reaches 500M Users", source: "TechCrunch", time: "4h ago", summary: "OpenAI announces milestone as daily active users double year-over-year." }],
-  "api":        [{ title: "OpenAI Releases New API Features", source: "The Verge", time: "6h ago", summary: "Developers get access to real-time voice, vision, and memory APIs in one package." }],
-  "sam altman": [{ title: "Sam Altman Keynote at Davos", source: "Bloomberg", time: "2h ago", summary: "OpenAI CEO outlines vision for AGI timeline and safety commitments to world leaders." }],
-  "dall-e":     [{ title: "DALL-E 4 Launches with Video", source: "The Verge", time: "3h ago", summary: "OpenAI's image model now generates 4K images and short video clips from text." }],
-  "whisper":    [{ title: "Whisper V4 Transcribes 100 Languages", source: "OpenAI Blog", time: "1d ago", summary: "New speech recognition model achieves human-level accuracy in all major languages." }],
-  "funding":    [{ title: "OpenAI Valued at $300B", source: "FT", time: "2h ago", summary: "Latest funding round puts the AI giant at a record valuation after investor frenzy." }],
-  "safety":     [{ title: "OpenAI Safety Board Established", source: "Reuters", time: "5h ago", summary: "Independent experts join new board to oversee AI development and deployment." }],
-  "lawsuit":    [{ title: "NY Times Lawsuit Update", source: "AP", time: "1d ago", summary: "Court rules OpenAI must preserve training data logs as copyright case proceeds." }],
-  "plugins":    [{ title: "ChatGPT Plugins Hit 1,000 Tools", source: "TechCrunch", time: "3h ago", summary: "Plugin ecosystem grows rapidly as developers build on ChatGPT's platform." }],
-  "voice":      [{ title: "ChatGPT Voice Mode Expands", source: "The Verge", time: "4h ago", summary: "Advanced voice mode now available in 50 languages with emotional tone support." }],
-};
-
-// Default news if keyword not found
-const DEFAULT_NEWS = [
-  { title: "AI Industry Hits $1 Trillion Valuation", source: "Bloomberg", time: "1h ago", summary: "Global AI market reaches historic milestone as enterprise adoption accelerates." },
-  { title: "Tech Giants Race for AI Supremacy", source: "FT", time: "3h ago", summary: "Google, Microsoft, Meta and Apple all announce major AI investments this quarter." },
-  { title: "AI Regulation Debate Heats Up", source: "Reuters", time: "5h ago", summary: "Lawmakers worldwide push for stricter controls on advanced AI systems." },
-];
+const mainBot    = new TelegramBot(MAIN_TOKEN,    { polling: true });
+const aiBot      = new TelegramBot(AI_TOKEN,      { polling: true });
+const bitcoinBot = new TelegramBot(BITCOIN_TOKEN, { polling: true });
+const teslaBot   = new TelegramBot(TESLA_TOKEN,   { polling: true });
+const openaiBot  = new TelegramBot(OPENAI_TOKEN,  { polling: true });
 
 // ============================
 // 🔧 HELPER FUNCTIONS
 // ============================
-function getNews(keyword) {
-  const key = keyword.toLowerCase().trim();
-  return NEWS_DATA[key] || DEFAULT_NEWS;
-}
-
-function formatNewsResults(articles, keyword) {
-  let msg = `🔍 *Results for: ${keyword}*\n\n`;
-  articles.forEach((a, i) => {
-    msg += `${i + 1}. 📌 *${a.title}*\n`;
-    msg += `   📰 ${a.source}  ·  🕐 ${a.time}\n`;
-    msg += `   ${a.summary}\n\n`;
+function formatChannelList(channels, topic) {
+  let msg = `📢 *${topic} Channels*\n`;
+  msg += `─────────────────────\n\n`;
+  channels.forEach((ch, i) => {
+    msg += `${i + 1}. ${ch.name}\n`;
+    msg += `   👥 ${ch.members} members\n`;
+    msg += `   📝 ${ch.desc}\n`;
+    msg += `   🔗 @${ch.user}\n\n`;
   });
+  msg += `─────────────────────\n`;
+  msg += `💡 Tap any username to join!`;
   return msg;
 }
 
-function makeKeyboard(keywords, botName) {
+function getChannelButtons(channels) {
+  return {
+    inline_keyboard: channels.map(ch => ([
+      { text: `${ch.name} · ${ch.members}`, url: `https://t.me/${ch.user}` }
+    ])),
+  };
+}
+
+function makeKeyboard(keywords) {
   const rows = [];
   for (let i = 0; i < keywords.length; i += 4) {
     rows.push(
@@ -157,7 +144,7 @@ function getBottomMenu(latestCb, trendingCb) {
   return {
     inline_keyboard: [
       [
-        { text: "📰 Latest News", callback_data: latestCb },
+        { text: "📢 All Channels", callback_data: latestCb },
         { text: "🔥 Trending", callback_data: trendingCb },
       ],
     ],
@@ -221,22 +208,21 @@ aiBot.onText(/\/start/, async (msg) => {
   await aiBot.sendPhoto(chatId, IMAGES.ai, {
     caption:
       `🤖 *Welcome to AI News Bot, ${firstName}!*\n\n` +
-      `🔍 Search the latest Artificial Intelligence news.\n` +
-      `Send any keyword to find what you need!\n\n` +
+      `🔍 Find the best AI Telegram channels.\n` +
+      `Tap any keyword below to explore channels!\n\n` +
       `📢 Stay ahead with cutting-edge AI updates.`,
     parse_mode: "Markdown",
   });
 
   // 2. Trending keywords
-  setTimeout(() => {
-    aiBot.sendMessage(chatId,
-      `🔥 *Trending AI Topics*\n\nTap any keyword to search instantly 👇`,
-      {
-        parse_mode: "Markdown",
-        reply_markup: makeKeyboard(AI_KEYWORDS, "ai"),
-      }
-    );
-  }, 800);
+  await new Promise(r => setTimeout(r, 800));
+  await aiBot.sendMessage(chatId,
+    `🔥 *Trending AI Topics*\n\nTap any keyword to find channels 👇`,
+    {
+      parse_mode: "Markdown",
+      reply_markup: makeKeyboard(AI_KEYWORDS),
+    }
+  );
 });
 
 aiBot.on("callback_query", async (query) => {
@@ -245,28 +231,28 @@ aiBot.on("callback_query", async (query) => {
   await aiBot.answerCallbackQuery(query.id);
 
   if (data.startsWith("search:")) {
-    const keyword = data.replace("search:", "");
-    const articles = getNews(keyword);
-    await aiBot.sendMessage(chatId, formatNewsResults(articles, keyword), {
-      parse_mode: "Markdown",
-      reply_markup: getBottomMenu("latest_ai", "trending_ai"),
-    });
-  } else if (data === "latest_ai") {
-    const latest = [
-      { title: "OpenAI Launches GPT-5", source: "The Verge", time: "1h ago", summary: "New model scores 95% on medical licensing exams." },
-      { title: "Google DeepMind AlphaFold 3", source: "Nature", time: "3h ago", summary: "Protein folding model now 10x faster than predecessor." },
-      { title: "Meta AI Expands to 50+ Countries", source: "TechCrunch", time: "2h ago", summary: "Multilingual AI assistant now available globally." },
-    ];
-    await aiBot.sendMessage(chatId, formatNewsResults(latest, "Latest AI News"), {
-      parse_mode: "Markdown",
-      reply_markup: getBottomMenu("latest_ai", "trending_ai"),
-    });
-  } else if (data === "trending_ai") {
+    // Show channel list
     await aiBot.sendMessage(chatId,
-      `🔥 *Trending AI Topics*\n\nTap any keyword to search instantly 👇`,
+      formatChannelList(CHANNELS.ai, "🤖 AI News"),
       {
         parse_mode: "Markdown",
-        reply_markup: makeKeyboard(AI_KEYWORDS, "ai"),
+        reply_markup: getChannelButtons(CHANNELS.ai),
+      }
+    );
+  } else if (data === "channels_ai") {
+    await aiBot.sendMessage(chatId,
+      formatChannelList(CHANNELS.ai, "🤖 AI News"),
+      {
+        parse_mode: "Markdown",
+        reply_markup: getChannelButtons(CHANNELS.ai),
+      }
+    );
+  } else if (data === "trending_ai") {
+    await aiBot.sendMessage(chatId,
+      `🔥 *Trending AI Topics*\n\nTap any keyword to find channels 👇`,
+      {
+        parse_mode: "Markdown",
+        reply_markup: makeKeyboard(AI_KEYWORDS),
       }
     );
   }
@@ -277,11 +263,13 @@ aiBot.on("message", async (msg) => {
   const text = msg.text;
   if (!text || text.startsWith("/")) return;
 
-  const articles = getNews(text);
-  await aiBot.sendMessage(chatId, formatNewsResults(articles, text), {
-    parse_mode: "Markdown",
-    reply_markup: getBottomMenu("latest_ai", "trending_ai"),
-  });
+  await aiBot.sendMessage(chatId,
+    formatChannelList(CHANNELS.ai, "🤖 AI News"),
+    {
+      parse_mode: "Markdown",
+      reply_markup: getChannelButtons(CHANNELS.ai),
+    }
+  );
 });
 
 // ============================
@@ -291,26 +279,23 @@ bitcoinBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
 
-  // 1. Welcome image + text
   await bitcoinBot.sendPhoto(chatId, IMAGES.bitcoin, {
     caption:
       `₿ *Welcome to Bitcoin News Bot, ${firstName}!*\n\n` +
-      `🔍 Search the latest Bitcoin & Crypto news.\n` +
-      `Send any keyword to find what you need!\n\n` +
+      `🔍 Find the best Bitcoin & Crypto Telegram channels.\n` +
+      `Tap any keyword below to explore channels!\n\n` +
       `📢 Stay ahead with real-time crypto updates.`,
     parse_mode: "Markdown",
   });
 
-  // 2. Trending keywords
-  setTimeout(() => {
-    bitcoinBot.sendMessage(chatId,
-      `🔥 *Trending Crypto Topics*\n\nTap any keyword to search instantly 👇`,
-      {
-        parse_mode: "Markdown",
-        reply_markup: makeKeyboard(BITCOIN_KEYWORDS, "bitcoin"),
-      }
-    );
-  }, 800);
+  await new Promise(r => setTimeout(r, 800));
+  await bitcoinBot.sendMessage(chatId,
+    `🔥 *Trending Crypto Topics*\n\nTap any keyword to find channels 👇`,
+    {
+      parse_mode: "Markdown",
+      reply_markup: makeKeyboard(BITCOIN_KEYWORDS),
+    }
+  );
 });
 
 bitcoinBot.on("callback_query", async (query) => {
@@ -319,28 +304,27 @@ bitcoinBot.on("callback_query", async (query) => {
   await bitcoinBot.answerCallbackQuery(query.id);
 
   if (data.startsWith("search:")) {
-    const keyword = data.replace("search:", "");
-    const articles = getNews(keyword);
-    await bitcoinBot.sendMessage(chatId, formatNewsResults(articles, keyword), {
-      parse_mode: "Markdown",
-      reply_markup: getBottomMenu("latest_btc", "trending_btc"),
-    });
-  } else if (data === "latest_btc") {
-    const latest = [
-      { title: "Bitcoin Surpasses $120,000", source: "CoinDesk", time: "30m ago", summary: "Institutional buying accelerates as ETF inflows hit $2B." },
-      { title: "Bitcoin ETF Hits Record Volume", source: "CoinTelegraph", time: "4h ago", summary: "BlackRock's Bitcoin ETF records $3.5B single-day volume." },
-      { title: "JPMorgan Launches Bitcoin Custody", source: "FT", time: "8h ago", summary: "Wall Street giant now offers institutional Bitcoin storage." },
-    ];
-    await bitcoinBot.sendMessage(chatId, formatNewsResults(latest, "Latest Bitcoin News"), {
-      parse_mode: "Markdown",
-      reply_markup: getBottomMenu("latest_btc", "trending_btc"),
-    });
-  } else if (data === "trending_btc") {
     await bitcoinBot.sendMessage(chatId,
-      `🔥 *Trending Crypto Topics*\n\nTap any keyword to search instantly 👇`,
+      formatChannelList(CHANNELS.bitcoin, "₿ Bitcoin & Crypto"),
       {
         parse_mode: "Markdown",
-        reply_markup: makeKeyboard(BITCOIN_KEYWORDS, "bitcoin"),
+        reply_markup: getChannelButtons(CHANNELS.bitcoin),
+      }
+    );
+  } else if (data === "channels_btc") {
+    await bitcoinBot.sendMessage(chatId,
+      formatChannelList(CHANNELS.bitcoin, "₿ Bitcoin & Crypto"),
+      {
+        parse_mode: "Markdown",
+        reply_markup: getChannelButtons(CHANNELS.bitcoin),
+      }
+    );
+  } else if (data === "trending_btc") {
+    await bitcoinBot.sendMessage(chatId,
+      `🔥 *Trending Crypto Topics*\n\nTap any keyword to find channels 👇`,
+      {
+        parse_mode: "Markdown",
+        reply_markup: makeKeyboard(BITCOIN_KEYWORDS),
       }
     );
   }
@@ -351,11 +335,13 @@ bitcoinBot.on("message", async (msg) => {
   const text = msg.text;
   if (!text || text.startsWith("/")) return;
 
-  const articles = getNews(text);
-  await bitcoinBot.sendMessage(chatId, formatNewsResults(articles, text), {
-    parse_mode: "Markdown",
-    reply_markup: getBottomMenu("latest_btc", "trending_btc"),
-  });
+  await bitcoinBot.sendMessage(chatId,
+    formatChannelList(CHANNELS.bitcoin, "₿ Bitcoin & Crypto"),
+    {
+      parse_mode: "Markdown",
+      reply_markup: getChannelButtons(CHANNELS.bitcoin),
+    }
+  );
 });
 
 // ============================
@@ -365,26 +351,23 @@ teslaBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
 
-  // 1. Welcome image + text
   await teslaBot.sendPhoto(chatId, IMAGES.tesla, {
     caption:
       `🚗 *Welcome to Tesla News Bot, ${firstName}!*\n\n` +
-      `🔍 Search the latest Tesla & EV news.\n` +
-      `Send any keyword to find what you need!\n\n` +
+      `🔍 Find the best Tesla & EV Telegram channels.\n` +
+      `Tap any keyword below to explore channels!\n\n` +
       `📢 Stay ahead with real-time Tesla updates.`,
     parse_mode: "Markdown",
   });
 
-  // 2. Trending keywords
-  setTimeout(() => {
-    teslaBot.sendMessage(chatId,
-      `🔥 *Trending Tesla Topics*\n\nTap any keyword to search instantly 👇`,
-      {
-        parse_mode: "Markdown",
-        reply_markup: makeKeyboard(TESLA_KEYWORDS, "tesla"),
-      }
-    );
-  }, 800);
+  await new Promise(r => setTimeout(r, 800));
+  await teslaBot.sendMessage(chatId,
+    `🔥 *Trending Tesla Topics*\n\nTap any keyword to find channels 👇`,
+    {
+      parse_mode: "Markdown",
+      reply_markup: makeKeyboard(TESLA_KEYWORDS),
+    }
+  );
 });
 
 teslaBot.on("callback_query", async (query) => {
@@ -393,28 +376,27 @@ teslaBot.on("callback_query", async (query) => {
   await teslaBot.answerCallbackQuery(query.id);
 
   if (data.startsWith("search:")) {
-    const keyword = data.replace("search:", "");
-    const articles = getNews(keyword);
-    await teslaBot.sendMessage(chatId, formatNewsResults(articles, keyword), {
-      parse_mode: "Markdown",
-      reply_markup: getBottomMenu("latest_tesla", "trending_tesla"),
-    });
-  } else if (data === "latest_tesla") {
-    const latest = [
-      { title: "Tesla Cybertruck Recall Issued", source: "AP", time: "1h ago", summary: "NHTSA orders recall of 45,000 Cybertrucks over faulty software." },
-      { title: "Tesla Q1 Deliveries Miss Estimates", source: "WSJ", time: "4h ago", summary: "Company delivers 386,000 vehicles, below analyst expectations." },
-      { title: "Tesla FSD Version 13 Released", source: "Electrek", time: "5h ago", summary: "Major improvements to highway and city navigation." },
-    ];
-    await teslaBot.sendMessage(chatId, formatNewsResults(latest, "Latest Tesla News"), {
-      parse_mode: "Markdown",
-      reply_markup: getBottomMenu("latest_tesla", "trending_tesla"),
-    });
-  } else if (data === "trending_tesla") {
     await teslaBot.sendMessage(chatId,
-      `🔥 *Trending Tesla Topics*\n\nTap any keyword to search instantly 👇`,
+      formatChannelList(CHANNELS.tesla, "🚗 Tesla & EV"),
       {
         parse_mode: "Markdown",
-        reply_markup: makeKeyboard(TESLA_KEYWORDS, "tesla"),
+        reply_markup: getChannelButtons(CHANNELS.tesla),
+      }
+    );
+  } else if (data === "channels_tesla") {
+    await teslaBot.sendMessage(chatId,
+      formatChannelList(CHANNELS.tesla, "🚗 Tesla & EV"),
+      {
+        parse_mode: "Markdown",
+        reply_markup: getChannelButtons(CHANNELS.tesla),
+      }
+    );
+  } else if (data === "trending_tesla") {
+    await teslaBot.sendMessage(chatId,
+      `🔥 *Trending Tesla Topics*\n\nTap any keyword to find channels 👇`,
+      {
+        parse_mode: "Markdown",
+        reply_markup: makeKeyboard(TESLA_KEYWORDS),
       }
     );
   }
@@ -425,11 +407,13 @@ teslaBot.on("message", async (msg) => {
   const text = msg.text;
   if (!text || text.startsWith("/")) return;
 
-  const articles = getNews(text);
-  await teslaBot.sendMessage(chatId, formatNewsResults(articles, text), {
-    parse_mode: "Markdown",
-    reply_markup: getBottomMenu("latest_tesla", "trending_tesla"),
-  });
+  await teslaBot.sendMessage(chatId,
+    formatChannelList(CHANNELS.tesla, "🚗 Tesla & EV"),
+    {
+      parse_mode: "Markdown",
+      reply_markup: getChannelButtons(CHANNELS.tesla),
+    }
+  );
 });
 
 // ============================
@@ -439,26 +423,23 @@ openaiBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
 
-  // 1. Welcome image + text
   await openaiBot.sendPhoto(chatId, IMAGES.openai, {
     caption:
       `🌐 *Welcome to OpenAI News Bot, ${firstName}!*\n\n` +
-      `🔍 Search the latest OpenAI & ChatGPT news.\n` +
-      `Send any keyword to find what you need!\n\n` +
+      `🔍 Find the best OpenAI & ChatGPT Telegram channels.\n` +
+      `Tap any keyword below to explore channels!\n\n` +
       `📢 Stay ahead with real-time OpenAI updates.`,
     parse_mode: "Markdown",
   });
 
-  // 2. Trending keywords
-  setTimeout(() => {
-    openaiBot.sendMessage(chatId,
-      `🔥 *Trending OpenAI Topics*\n\nTap any keyword to search instantly 👇`,
-      {
-        parse_mode: "Markdown",
-        reply_markup: makeKeyboard(OPENAI_KEYWORDS, "openai"),
-      }
-    );
-  }, 800);
+  await new Promise(r => setTimeout(r, 800));
+  await openaiBot.sendMessage(chatId,
+    `🔥 *Trending OpenAI Topics*\n\nTap any keyword to find channels 👇`,
+    {
+      parse_mode: "Markdown",
+      reply_markup: makeKeyboard(OPENAI_KEYWORDS),
+    }
+  );
 });
 
 openaiBot.on("callback_query", async (query) => {
@@ -467,28 +448,27 @@ openaiBot.on("callback_query", async (query) => {
   await openaiBot.answerCallbackQuery(query.id);
 
   if (data.startsWith("search:")) {
-    const keyword = data.replace("search:", "");
-    const articles = getNews(keyword);
-    await openaiBot.sendMessage(chatId, formatNewsResults(articles, keyword), {
-      parse_mode: "Markdown",
-      reply_markup: getBottomMenu("latest_openai", "trending_openai"),
-    });
-  } else if (data === "latest_openai") {
-    const latest = [
-      { title: "OpenAI Valued at $300B", source: "FT", time: "2h ago", summary: "Latest funding round puts AI giant at record valuation." },
-      { title: "ChatGPT Reaches 500M Users", source: "TechCrunch", time: "4h ago", summary: "Daily active users double year-over-year." },
-      { title: "OpenAI Releases New API Features", source: "The Verge", time: "6h ago", summary: "Voice, vision, and memory APIs now in one package." },
-    ];
-    await openaiBot.sendMessage(chatId, formatNewsResults(latest, "Latest OpenAI News"), {
-      parse_mode: "Markdown",
-      reply_markup: getBottomMenu("latest_openai", "trending_openai"),
-    });
-  } else if (data === "trending_openai") {
     await openaiBot.sendMessage(chatId,
-      `🔥 *Trending OpenAI Topics*\n\nTap any keyword to search instantly 👇`,
+      formatChannelList(CHANNELS.openai, "🌐 OpenAI & ChatGPT"),
       {
         parse_mode: "Markdown",
-        reply_markup: makeKeyboard(OPENAI_KEYWORDS, "openai"),
+        reply_markup: getChannelButtons(CHANNELS.openai),
+      }
+    );
+  } else if (data === "channels_openai") {
+    await openaiBot.sendMessage(chatId,
+      formatChannelList(CHANNELS.openai, "🌐 OpenAI & ChatGPT"),
+      {
+        parse_mode: "Markdown",
+        reply_markup: getChannelButtons(CHANNELS.openai),
+      }
+    );
+  } else if (data === "trending_openai") {
+    await openaiBot.sendMessage(chatId,
+      `🔥 *Trending OpenAI Topics*\n\nTap any keyword to find channels 👇`,
+      {
+        parse_mode: "Markdown",
+        reply_markup: makeKeyboard(OPENAI_KEYWORDS),
       }
     );
   }
@@ -499,11 +479,13 @@ openaiBot.on("message", async (msg) => {
   const text = msg.text;
   if (!text || text.startsWith("/")) return;
 
-  const articles = getNews(text);
-  await openaiBot.sendMessage(chatId, formatNewsResults(articles, text), {
-    parse_mode: "Markdown",
-    reply_markup: getBottomMenu("latest_openai", "trending_openai"),
-  });
+  await openaiBot.sendMessage(chatId,
+    formatChannelList(CHANNELS.openai, "🌐 OpenAI & ChatGPT"),
+    {
+      parse_mode: "Markdown",
+      reply_markup: getChannelButtons(CHANNELS.openai),
+    }
+  );
 });
 
 // ============================
