@@ -10,13 +10,37 @@ const TESLA_TOKEN   = "8382399883:AAEeqNC05j6jL3WcgcbI1RqO7zqsIELiuxo";
 const OPENAI_TOKEN  = "8749342231:AAEAhhCS_xL2Wdh3bBKbQn2Gm3EqBwfVHwQ";
 
 // ============================
-// 🖼️ TOPIC IMAGES
+// 🖼️ IMAGES
 // ============================
 const IMAGES = {
-  ai:      "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
-  bitcoin: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=800&q=80",
-  tesla:   "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80",
-  openai:  "https://images.unsplash.com/photo-1676299081847-824916de030a?w=800&q=80",
+  // AI News Bot Images
+  ai: {
+    welcome: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
+    sample1: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80",
+    sample2: "https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=800&q=80",
+    sample3: "https://images.unsplash.com/photo-1684369176170-463e84248b70?w=800&q=80",
+  },
+  // Bitcoin Bot Images
+  bitcoin: {
+    welcome: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=800&q=80",
+    sample1: "https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=800&q=80",
+    sample2: "https://images.unsplash.com/photo-1609726494499-27d3e942456c?w=800&q=80",
+    sample3: "https://images.unsplash.com/photo-1591994843349-f415893b3a6b?w=800&q=80",
+  },
+  // Tesla Bot Images
+  tesla: {
+    welcome: "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80",
+    sample1: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
+    sample2: "https://images.unsplash.com/photo-1562618817-253a073daa3b?w=800&q=80",
+    sample3: "https://images.unsplash.com/photo-1571987502227-9231b837d92a?w=800&q=80",
+  },
+  // OpenAI Bot Images
+  openai: {
+    welcome: "https://images.unsplash.com/photo-1676299081847-824916de030a?w=800&q=80",
+    sample1: "https://images.unsplash.com/photo-1680016961031-c5de8f2f4bfc?w=800&q=80",
+    sample2: "https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=800&q=80",
+    sample3: "https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=800&q=80",
+  },
 };
 
 // ============================
@@ -28,8 +52,6 @@ const bitcoinBot = new TelegramBot(BITCOIN_TOKEN, { polling: true });
 const teslaBot   = new TelegramBot(TESLA_TOKEN,   { polling: true });
 const openaiBot  = new TelegramBot(OPENAI_TOKEN,  { polling: true });
 
-console.log("✅ All 5 bots are starting...");
-
 // ============================
 // 📰 NEWS DATA
 // ============================
@@ -38,7 +60,7 @@ const AI_NEWS = [
   { emoji: "🧠", title: "Google DeepMind AlphaFold 3", source: "Nature", time: "3h ago", summary: "New protein folding model solves structures 10x faster than its predecessor." },
   { emoji: "💼", title: "Microsoft Copilot Restructuring", source: "Bloomberg", time: "5h ago", summary: "Tech giant announces AI-driven restructuring across support and finance teams." },
   { emoji: "🔒", title: "EU AI Act Enforcement Begins", source: "Reuters", time: "1d ago", summary: "First fines issued under new regulation targeting high-risk AI systems." },
-  { emoji: "🌐", title: "Meta AI Expands Globally", source: "TechCrunch", time: "2h ago", summary: "Meta's AI assistant now available in 50+ countries with multilingual support." },
+  { emoji: "🌐", title: "Meta AI Expands Globally", source: "TechCrunch", time: "2h ago", summary: "Meta AI assistant now available in 50+ countries with multilingual support." },
   { emoji: "🔬", title: "AI Detects Cancer Earlier Than Doctors", source: "BBC", time: "6h ago", summary: "New study shows AI model detects early-stage cancer with 94% accuracy." },
 ];
 
@@ -90,6 +112,17 @@ function getRefreshKeyboard() {
   };
 }
 
+// Send 3 sample images one by one with captions
+async function sendSampleImages(bot, chatId, images, captions) {
+  for (let i = 0; i < 3; i++) {
+    await new Promise(resolve => setTimeout(resolve, 600));
+    await bot.sendPhoto(chatId, images[i], {
+      caption: captions[i],
+      parse_mode: "Markdown",
+    });
+  }
+}
+
 // ============================
 // 🏠 MAIN BOT
 // ============================
@@ -111,7 +144,6 @@ function getMainKeyboard() {
 mainBot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
-
   mainBot.sendMessage(
     chatId,
     `📡 *Welcome to NewsSearch Bot, ${firstName}!*\n\n` +
@@ -123,7 +155,6 @@ mainBot.onText(/\/start/, (msg) => {
     `• Get the latest articles from top sources\n`,
     { parse_mode: "Markdown" }
   );
-
   setTimeout(() => {
     mainBot.sendMessage(
       chatId,
@@ -142,7 +173,7 @@ mainBot.onText(/\/hot/, (msg) => {
 
 mainBot.on("message", (msg) => {
   if (!msg.text || msg.text.startsWith("/")) return;
-  mainBot.sendMessage(msg.chat.id, `🔍 Tap a topic button to open its news bot!\n\nType /hot to see all topics.`, { parse_mode: "Markdown" });
+  mainBot.sendMessage(msg.chat.id, `🔍 Tap a topic button to open its news bot!\n\nType /hot to see all topics.`);
 });
 
 // ============================
@@ -152,25 +183,45 @@ aiBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
 
-  // Send image + welcome caption
-  await aiBot.sendPhoto(chatId, IMAGES.ai, {
+  // 1. Welcome Image + Text
+  await aiBot.sendPhoto(chatId, IMAGES.ai.welcome, {
     caption:
       `🤖 *Welcome to AI News Bot, ${firstName}!*\n\n` +
       `Stay updated with the latest in Artificial Intelligence.\n\n` +
       `✅ *What you'll get:*\n` +
       `• Latest AI research & breakthroughs\n` +
       `• Big Tech AI updates\n` +
-      `• AI policy & regulation news\n`,
+      `• AI policy & regulation news`,
     parse_mode: "Markdown",
   });
 
-  // Send news after image
-  setTimeout(() => {
-    aiBot.sendMessage(chatId, formatNews(AI_NEWS, "🤖 *Latest AI News*"), {
-      parse_mode: "Markdown",
-      reply_markup: getRefreshKeyboard(),
-    });
-  }, 800);
+  // 2. News List
+  await new Promise(resolve => setTimeout(resolve, 800));
+  await aiBot.sendMessage(chatId, formatNews(AI_NEWS, "🤖 *Latest AI News*"), {
+    parse_mode: "Markdown",
+    reply_markup: getRefreshKeyboard(),
+  });
+
+  // 3. Sample Image 1
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await aiBot.sendPhoto(chatId, IMAGES.ai.sample1, {
+    caption: `🧠 *AI Spotlight #1*\n\nGoogle DeepMind achieves new milestone in AI reasoning, surpassing human-level performance on complex math benchmarks.\n\n📰 Nature  ·  🕐 2h ago`,
+    parse_mode: "Markdown",
+  });
+
+  // 4. Sample Image 2
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await aiBot.sendPhoto(chatId, IMAGES.ai.sample2, {
+    caption: `💡 *AI Spotlight #2*\n\nMeta releases open-source AI model that outperforms GPT-4 on coding tasks, available for free to developers worldwide.\n\n📰 TechCrunch  ·  🕐 4h ago`,
+    parse_mode: "Markdown",
+  });
+
+  // 5. Sample Image 3
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await aiBot.sendPhoto(chatId, IMAGES.ai.sample3, {
+    caption: `🔬 *AI Spotlight #3*\n\nNew AI system from MIT can predict protein structures in seconds, revolutionizing drug discovery and medical research.\n\n📰 MIT News  ·  🕐 6h ago`,
+    parse_mode: "Markdown",
+  });
 });
 
 aiBot.onText(/\/news/, (msg) => {
@@ -200,25 +251,45 @@ bitcoinBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
 
-  // Send image + welcome caption
-  await bitcoinBot.sendPhoto(chatId, IMAGES.bitcoin, {
+  // 1. Welcome Image + Text
+  await bitcoinBot.sendPhoto(chatId, IMAGES.bitcoin.welcome, {
     caption:
       `₿ *Welcome to Bitcoin News Bot, ${firstName}!*\n\n` +
       `Stay updated with the latest Bitcoin & crypto news.\n\n` +
       `✅ *What you'll get:*\n` +
       `• Live Bitcoin price updates\n` +
       `• Institutional & ETF news\n` +
-      `• Crypto regulation updates\n`,
+      `• Crypto regulation updates`,
     parse_mode: "Markdown",
   });
 
-  // Send news after image
-  setTimeout(() => {
-    bitcoinBot.sendMessage(chatId, formatNews(BITCOIN_NEWS, "₿ *Latest Bitcoin News*"), {
-      parse_mode: "Markdown",
-      reply_markup: getRefreshKeyboard(),
-    });
-  }, 800);
+  // 2. News List
+  await new Promise(resolve => setTimeout(resolve, 800));
+  await bitcoinBot.sendMessage(chatId, formatNews(BITCOIN_NEWS, "₿ *Latest Bitcoin News*"), {
+    parse_mode: "Markdown",
+    reply_markup: getRefreshKeyboard(),
+  });
+
+  // 3. Sample Image 1
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await bitcoinBot.sendPhoto(chatId, IMAGES.bitcoin.sample1, {
+    caption: `₿ *Bitcoin Spotlight #1*\n\nBitcoin ETF inflows reach record $2.4B in a single week as institutional adoption accelerates across Wall Street.\n\n📰 CoinDesk  ·  🕐 1h ago`,
+    parse_mode: "Markdown",
+  });
+
+  // 4. Sample Image 2
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await bitcoinBot.sendPhoto(chatId, IMAGES.bitcoin.sample2, {
+    caption: `📈 *Bitcoin Spotlight #2*\n\nMicroStrategy adds another 10,000 BTC to its treasury, bringing total holdings to over 214,000 Bitcoin worth $25B.\n\n📰 Bloomberg  ·  🕐 3h ago`,
+    parse_mode: "Markdown",
+  });
+
+  // 5. Sample Image 3
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await bitcoinBot.sendPhoto(chatId, IMAGES.bitcoin.sample3, {
+    caption: `🌐 *Bitcoin Spotlight #3*\n\nG20 nations agree on unified crypto regulation framework, bringing clarity to Bitcoin's legal status in major economies.\n\n📰 Reuters  ·  🕐 5h ago`,
+    parse_mode: "Markdown",
+  });
 });
 
 bitcoinBot.onText(/\/news/, (msg) => {
@@ -248,25 +319,45 @@ teslaBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
 
-  // Send image + welcome caption
-  await teslaBot.sendPhoto(chatId, IMAGES.tesla, {
+  // 1. Welcome Image + Text
+  await teslaBot.sendPhoto(chatId, IMAGES.tesla.welcome, {
     caption:
       `🚗 *Welcome to Tesla News Bot, ${firstName}!*\n\n` +
       `Stay updated with the latest Tesla & EV news.\n\n` +
       `✅ *What you'll get:*\n` +
       `• Tesla vehicle & product updates\n` +
       `• Stock & earnings news\n` +
-      `• FSD & technology updates\n`,
+      `• FSD & technology updates`,
     parse_mode: "Markdown",
   });
 
-  // Send news after image
-  setTimeout(() => {
-    teslaBot.sendMessage(chatId, formatNews(TESLA_NEWS, "🚗 *Latest Tesla News*"), {
-      parse_mode: "Markdown",
-      reply_markup: getRefreshKeyboard(),
-    });
-  }, 800);
+  // 2. News List
+  await new Promise(resolve => setTimeout(resolve, 800));
+  await teslaBot.sendMessage(chatId, formatNews(TESLA_NEWS, "🚗 *Latest Tesla News*"), {
+    parse_mode: "Markdown",
+    reply_markup: getRefreshKeyboard(),
+  });
+
+  // 3. Sample Image 1
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await teslaBot.sendPhoto(chatId, IMAGES.tesla.sample1, {
+    caption: `🚗 *Tesla Spotlight #1*\n\nTesla Model 3 Highland wins European Car of the Year award, beating traditional automakers for the third consecutive year.\n\n📰 Electrek  ·  🕐 1h ago`,
+    parse_mode: "Markdown",
+  });
+
+  // 4. Sample Image 2
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await teslaBot.sendPhoto(chatId, IMAGES.tesla.sample2, {
+    caption: `⚡ *Tesla Spotlight #2*\n\nTesla Supercharger network expands to 60,000 stations globally, making it the world's largest EV charging network.\n\n📰 Tesla Blog  ·  🕐 3h ago`,
+    parse_mode: "Markdown",
+  });
+
+  // 5. Sample Image 3
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await teslaBot.sendPhoto(chatId, IMAGES.tesla.sample3, {
+    caption: `🔋 *Tesla Spotlight #3*\n\nTesla's new 4680 battery cell achieves 500-mile range milestone in Model S, setting a new EV industry record.\n\n📰 WSJ  ·  🕐 5h ago`,
+    parse_mode: "Markdown",
+  });
 });
 
 teslaBot.onText(/\/news/, (msg) => {
@@ -296,25 +387,45 @@ openaiBot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || "there";
 
-  // Send image + welcome caption
-  await openaiBot.sendPhoto(chatId, IMAGES.openai, {
+  // 1. Welcome Image + Text
+  await openaiBot.sendPhoto(chatId, IMAGES.openai.welcome, {
     caption:
       `🌐 *Welcome to OpenAI News Bot, ${firstName}!*\n\n` +
       `Stay updated with the latest OpenAI & ChatGPT news.\n\n` +
       `✅ *What you'll get:*\n` +
       `• ChatGPT & GPT model updates\n` +
       `• OpenAI business & funding news\n` +
-      `• AI policy & legal updates\n`,
+      `• AI policy & legal updates`,
     parse_mode: "Markdown",
   });
 
-  // Send news after image
-  setTimeout(() => {
-    openaiBot.sendMessage(chatId, formatNews(OPENAI_NEWS, "🌐 *Latest OpenAI News*"), {
-      parse_mode: "Markdown",
-      reply_markup: getRefreshKeyboard(),
-    });
-  }, 800);
+  // 2. News List
+  await new Promise(resolve => setTimeout(resolve, 800));
+  await openaiBot.sendMessage(chatId, formatNews(OPENAI_NEWS, "🌐 *Latest OpenAI News*"), {
+    parse_mode: "Markdown",
+    reply_markup: getRefreshKeyboard(),
+  });
+
+  // 3. Sample Image 1
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await openaiBot.sendPhoto(chatId, IMAGES.openai.sample1, {
+    caption: `🌐 *OpenAI Spotlight #1*\n\nChatGPT introduces real-time collaboration features, allowing multiple users to work together in shared AI conversations.\n\n📰 The Verge  ·  🕐 1h ago`,
+    parse_mode: "Markdown",
+  });
+
+  // 4. Sample Image 2
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await openaiBot.sendPhoto(chatId, IMAGES.openai.sample2, {
+    caption: `🔑 *OpenAI Spotlight #2*\n\nOpenAI's new o3 reasoning model scores 100% on International Math Olympiad problems, a first for any AI system.\n\n📰 MIT Tech Review  ·  🕐 3h ago`,
+    parse_mode: "Markdown",
+  });
+
+  // 5. Sample Image 3
+  await new Promise(resolve => setTimeout(resolve, 600));
+  await openaiBot.sendPhoto(chatId, IMAGES.openai.sample3, {
+    caption: `⚖️ *OpenAI Spotlight #3*\n\nOpenAI announces new safety board with independent experts to oversee AI development and deployment decisions.\n\n📰 Reuters  ·  🕐 5h ago`,
+    parse_mode: "Markdown",
+  });
 });
 
 openaiBot.onText(/\/news/, (msg) => {
