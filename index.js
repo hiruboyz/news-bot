@@ -16,7 +16,7 @@ const WELCOME_IMAGE = "https://images.unsplash.com/photo-1504711434969-e33886168
 // ============================
 const CHANNELS = {
   ai: [
-    { name: "🤖 Test-01", user: "+tEgRhxrjD89iYTc1", members: "125K" },
+    { name: "🤖 Test-01", user: "@postiingNew", members: "125K" },
     // { name: "🧠 Deep Learning Hub", user: "deeplearninghub", desc: "Deep learning papers & tutorials", members: "89K" },
     // { name: "💡 Tech AI Insider", user: "techaiinsider", desc: "Big Tech AI updates from Google, Meta, Microsoft", members: "210K" },
     // { name: "🌐 AI World News", user: "aiworldnews", desc: "Global AI policy & industry news", members: "143K" },
