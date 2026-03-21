@@ -17,27 +17,27 @@ const WELCOME_IMAGE = "https://images.unsplash.com/photo-1504711434969-e33886168
 const CHANNELS = {
   ai: [
     { name: "🤖 AI News Daily", user: "+tEgRhxrjD89iYTc1", desc: "Latest AI breakthroughs & research", members: "125K" },
-    { name: "🧠 Deep Learning Hub", user: "deeplearninghub", desc: "Deep learning papers & tutorials", members: "89K" },
-    { name: "💡 Tech AI Insider", user: "techaiinsider", desc: "Big Tech AI updates from Google, Meta, Microsoft", members: "210K" },
-    { name: "🌐 AI World News", user: "aiworldnews", desc: "Global AI policy & industry news", members: "143K" },
+    // { name: "🧠 Deep Learning Hub", user: "deeplearninghub", desc: "Deep learning papers & tutorials", members: "89K" },
+    // { name: "💡 Tech AI Insider", user: "techaiinsider", desc: "Big Tech AI updates from Google, Meta, Microsoft", members: "210K" },
+    // { name: "🌐 AI World News", user: "aiworldnews", desc: "Global AI policy & industry news", members: "143K" },
   ],
   bitcoin: [
-    { name: "₿ Bitcoin News", user: "bitcoinnewschannel", desc: "Real-time Bitcoin price & news", members: "450K" },
-    { name: "📈 Crypto Daily", user: "cryptodailynews", desc: "Daily crypto market updates", members: "280K" },
-    { name: "🏦 Institutional Crypto", user: "institutionalcrypto", desc: "ETF, institutional Bitcoin news", members: "95K" },
-    { name: "🌍 Crypto Regulation", user: "cryptoregulationnews", desc: "Global crypto laws & compliance", members: "112K" },
+    { name: "₿ Bitcoin News", user: "+tEgRhxrjD89iYTc1", desc: "Real-time Bitcoin price & news", members: "450K" },
+    // { name: "📈 Crypto Daily", user: "cryptodailynews", desc: "Daily crypto market updates", members: "280K" },
+    // { name: "🏦 Institutional Crypto", user: "institutionalcrypto", desc: "ETF, institutional Bitcoin news", members: "95K" },
+    // { name: "🌍 Crypto Regulation", user: "cryptoregulationnews", desc: "Global crypto laws & compliance", members: "112K" },
   ],
   tesla: [
-    { name: "🚗 Tesla News", user: "teslanewschannel", desc: "Latest Tesla vehicle & software updates", members: "340K" },
-    { name: "⚡ EV World", user: "evworldnews", desc: "Electric vehicle industry news", members: "189K" },
-    { name: "🤖 Tesla FSD Updates", user: "teslafsdnews", desc: "Full Self-Driving software updates", members: "225K" },
-    { name: "🚀 Elon Musk News", user: "elonmusknews", desc: "Elon Musk announcements & news", members: "512K" },
+    { name: "🚗 Tesla News", user: "+tEgRhxrjD89iYTc1", desc: "Latest Tesla vehicle & software updates", members: "340K" },
+    // { name: "⚡ EV World", user: "evworldnews", desc: "Electric vehicle industry news", members: "189K" },
+    // { name: "🤖 Tesla FSD Updates", user: "teslafsdnews", desc: "Full Self-Driving software updates", members: "225K" },
+    // { name: "🚀 Elon Musk News", user: "elonmusknews", desc: "Elon Musk announcements & news", members: "512K" },
   ],
   openai: [
-    { name: "🌐 ChatGPT News", user: "chatgptnewschannel", desc: "ChatGPT updates & tips", members: "620K" },
-    { name: "🤖 GPT Updates", user: "gptupdates", desc: "Latest GPT model releases", members: "380K" },
-    { name: "💻 OpenAI Developers", user: "openaidev", desc: "API updates & developer news", members: "234K" },
-    { name: "🚀 Sam Altman News", user: "samaltnews", desc: "OpenAI CEO updates & interviews", members: "198K" },
+    { name: "🌐 ChatGPT News", user: "+tEgRhxrjD89iYTc1", desc: "ChatGPT updates & tips", members: "620K" },
+    // { name: "🤖 GPT Updates", user: "gptupdates", desc: "Latest GPT model releases", members: "380K" },
+    // { name: "💻 OpenAI Developers", user: "openaidev", desc: "API updates & developer news", members: "234K" },
+    // { name: "🚀 Sam Altman News", user: "samaltnews", desc: "OpenAI CEO updates & interviews", members: "198K" },
   ],
 };
 
@@ -48,12 +48,12 @@ function getMainKeyboard() {
   return {
     inline_keyboard: [
       [
-        { text: "🤖 AI News", callback_data: "topic:ai" },
-        { text: "₿ Bitcoin", callback_data: "topic:bitcoin" },
+        { text: "🤖 Test-01", callback_data: "topic:ai" },
+        { text: "₿ Test-02", callback_data: "topic:bitcoin" },
       ],
       [
-        { text: "🚗 Tesla", callback_data: "topic:tesla" },
-        { text: "🌐 OpenAI", callback_data: "topic:openai" },
+        { text: "🚗 Test-03", callback_data: "topic:tesla" },
+        { text: "🌐 Test-04", callback_data: "topic:openai" },
       ],
     ],
   };
