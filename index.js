@@ -16,19 +16,19 @@ const WELCOME_IMAGE = "https://images.unsplash.com/photo-1504711434969-e33886168
 // ============================
 const CHANNELS = {
   ai: [
-    { name: "🤖 Test-01", user: "@postiingNew", members: "125K" },
+    { name: " Test-01", user: "postiingNew", members: "125K" },
     // { name: "🧠 Deep Learning Hub", user: "deeplearninghub", desc: "Deep learning papers & tutorials", members: "89K" },
     // { name: "💡 Tech AI Insider", user: "techaiinsider", desc: "Big Tech AI updates from Google, Meta, Microsoft", members: "210K" },
     // { name: "🌐 AI World News", user: "aiworldnews", desc: "Global AI policy & industry news", members: "143K" },
   ],
   bitcoin: [
-    { name: "₿ Test-02", user: "postiingNe", members: "450K" },
+    { name: " Test-02", user: "postiingNew02", members: "450K" },
     // { name: "📈 Crypto Daily", user: "cryptodailynews", desc: "Daily crypto market updates", members: "280K" },
     // { name: "🏦 Institutional Crypto", user: "institutionalcrypto", desc: "ETF, institutional Bitcoin news", members: "95K" },
     // { name: "🌍 Crypto Regulation", user: "cryptoregulationnews", desc: "Global crypto laws & compliance", members: "112K" },
   ],
   tesla: [
-    { name: "🚗 Test-03", user: "postiingNew", members: "340K" },
+    { name: " Test-03", user: "postiingNew03", members: "340K" },
     // { name: "⚡ EV World", user: "evworldnews", desc: "Electric vehicle industry news", members: "189K" },
     // { name: "🤖 Tesla FSD Updates", user: "teslafsdnews", desc: "Full Self-Driving software updates", members: "225K" },
     // { name: "🚀 Elon Musk News", user: "elonmusknews", desc: "Elon Musk announcements & news", members: "512K" },
@@ -53,7 +53,7 @@ function getMainKeyboard() {
       ],
       [
         { text: "🚗 Test-03", callback_data: "topic:tesla" },
-        { text: "🌐 Test-04", callback_data: "topic:openai" },
+        // { text: "🌐 Test-04", callback_data: "topic:openai" },
       ],
     ],
   };
