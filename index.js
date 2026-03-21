@@ -22,19 +22,19 @@ const CHANNELS = {
     // { name: "🌐 AI World News", user: "aiworldnews", desc: "Global AI policy & industry news", members: "143K" },
   ],
   bitcoin: [
-    { name: "₿ Test-02", user: "+tEgRhxrjD89iYTc1", members: "450K" },
+    { name: "₿ Test-02", user: "postiingNew", members: "450K" },
     // { name: "📈 Crypto Daily", user: "cryptodailynews", desc: "Daily crypto market updates", members: "280K" },
     // { name: "🏦 Institutional Crypto", user: "institutionalcrypto", desc: "ETF, institutional Bitcoin news", members: "95K" },
     // { name: "🌍 Crypto Regulation", user: "cryptoregulationnews", desc: "Global crypto laws & compliance", members: "112K" },
   ],
   tesla: [
-    { name: "🚗 Test-03", user: "+tEgRhxrjD89iYTc1", members: "340K" },
+    { name: "🚗 Test-03", user: "postiingNew", members: "340K" },
     // { name: "⚡ EV World", user: "evworldnews", desc: "Electric vehicle industry news", members: "189K" },
     // { name: "🤖 Tesla FSD Updates", user: "teslafsdnews", desc: "Full Self-Driving software updates", members: "225K" },
     // { name: "🚀 Elon Musk News", user: "elonmusknews", desc: "Elon Musk announcements & news", members: "512K" },
   ],
   openai: [
-    { name: "🌐 Test-04", user: "+tEgRhxrjD89iYTc1", members: "620K" },
+    { name: "🌐 Test-04", user: "postiingNew", members: "620K" },
     // { name: "🤖 GPT Updates", user: "gptupdates", desc: "Latest GPT model releases", members: "380K" },
     // { name: "💻 OpenAI Developers", user: "openaidev", desc: "API updates & developer news", members: "234K" },
     // { name: "🚀 Sam Altman News", user: "samaltnews", desc: "OpenAI CEO updates & interviews", members: "198K" },
