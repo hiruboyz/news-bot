@@ -22,7 +22,7 @@ const CHANNELS = {
     // { name: "🌐 AI World News", user: "aiworldnews", desc: "Global AI policy & industry news", members: "143K" },
   ],
   bitcoin: [
-    { name: "₿ Test-02", user: "postiingNew", members: "450K" },
+    { name: "₿ Test-02", user: "postiingNe", members: "450K" },
     // { name: "📈 Crypto Daily", user: "cryptodailynews", desc: "Daily crypto market updates", members: "280K" },
     // { name: "🏦 Institutional Crypto", user: "institutionalcrypto", desc: "ETF, institutional Bitcoin news", members: "95K" },
     // { name: "🌍 Crypto Regulation", user: "cryptoregulationnews", desc: "Global crypto laws & compliance", members: "112K" },
