@@ -62,7 +62,7 @@ function getMainKeyboard() {
 
 function getChannelButtons(channels, topic) {
   const rows = channels.map(ch => ([
-    { text: `${ch.name} · 👥 ${ch.members}`, url: `https://t.me/${ch.user}` }
+    { text: `${ch.name}`, url: `https://t.me/${ch.user}` }
   ]));
   rows.push([{ text: "🏠 Back to Main Menu", callback_data: "menu" }]);
   return { inline_keyboard: rows };
