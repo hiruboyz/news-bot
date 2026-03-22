@@ -49,11 +49,11 @@ function getMainKeyboard() {
   return {
     inline_keyboard: [
       [
-        { text: "🤖 Test-01", callback_data: "topic:ai" },
-        { text: "₿ Test-02", callback_data: "topic:bitcoin" },
+        { text: "美颜渲染", callback_data: "topic:ai" },
+        { text: "极致高潮", callback_data: "topic:bitcoin" },
       ],
       [
-        { text: "🚗 Test-03", callback_data: "topic:tesla" },
+        { text: "电子魅魔女友", callback_data: "topic:tesla" },
         // { text: "🌐 Test-04", callback_data: "topic:openai" },
       ],
     ],
