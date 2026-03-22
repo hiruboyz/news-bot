@@ -17,7 +17,7 @@ const WELCOME_IMAGE = "https://raw.githubusercontent.com/hiruboyz/news-bot/main/
 // ============================
 const CHANNELS = {
   ai: [
-    { name: " Test-01", user: "postiingNew", members: "125K" },
+     { name: "🎬 こすっち103/ミニマム146cm超究極クビレ轟絶癒やし系ロ●ビッチ彼氏持ち美少女ナマ中出しNTR凶行！誰もが犯したくなるレベルの被虐大好きドMちゃん！首絞めで妊娠力爆上がり孕まSEX！", user: "postiingNew/23" },
     // { name: "🧠 Deep Learning Hub", user: "deeplearninghub", desc: "Deep learning papers & tutorials", members: "89K" },
     // { name: "💡 Tech AI Insider", user: "techaiinsider", desc: "Big Tech AI updates from Google, Meta, Microsoft", members: "210K" },
     // { name: "🌐 AI World News", user: "aiworldnews", desc: "Global AI policy & industry news", members: "143K" },
