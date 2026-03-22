@@ -9,7 +9,7 @@ const bot = new TelegramBot(TOKEN, { polling: true });
 // ============================
 // 🖼️ WELCOME IMAGE
 // ============================
-const WELCOME_IMAGE = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80";
+const WELCOME_IMAGE = "https://imgur.com/a/G274wO2";
 
 // ============================
 // 📢 CHANNEL LISTS
