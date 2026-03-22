@@ -9,7 +9,8 @@ const bot = new TelegramBot(TOKEN, { polling: true });
 // ============================
 // 🖼️ WELCOME IMAGE
 // ============================
-const WELCOME_IMAGE = "https://github.com/hiruboyz/news-bot/blob/main/Magnifying%20wealth%20with%20vibrant%20colors.png";
+
+const WELCOME_IMAGE = "https://raw.githubusercontent.com/hiruboyz/news-bot/main/Magnifying%20wealth%20with%20vibrant%20colors.png";
 
 // ============================
 // 📢 CHANNEL LISTS
