@@ -99,7 +99,7 @@ bot.onText(/\/start/, async (msg) => {
   await bot.sendPhoto(chatId, WELCOME_IMAGE, {
     caption:
       `📡 *Welcome to Test Bot, ${firstName}!*\n\n` +
-      `🔍This is a Telegram resource search engine. Send keywords to find groups, channels, videos, and music.\n` +
+      `🔍This is a Telegram resource search engine. Send keywords to find groups, channels, videos, and music.\n\n` +
       // `Find the best news channels on AI, Bitcoin, Tesla & OpenAI.\n\n` +
       `👇 Tap any topic to see the best channels!`,
     parse_mode: "Markdown",
