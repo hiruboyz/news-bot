@@ -68,18 +68,22 @@ function getChannelButtons(channels, topic) {
   return { inline_keyboard: rows };
 }
 
+// function formatChannelList(channels, topicName) {
+//   let msg = `📢 *${topicName} Channels*\n`;
+//   msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
+//   channels.forEach((ch, i) => {
+//     msg += `${i + 1}. *${ch.name}*\n`;
+//     msg += `   👥 ${ch.members} members\n`;
+//     msg += `   📝 ${ch.desc}\n`;
+//     msg += `   🔗 @${ch.user}\n\n`;
+//   });
+//   msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
+//   msg += `👇 Tap any channel to join!`;
+//   return msg;
+// }
+
 function formatChannelList(channels, topicName) {
-  let msg = `📢 *${topicName} Channels*\n`;
-  msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
-  channels.forEach((ch, i) => {
-    msg += `${i + 1}. *${ch.name}*\n`;
-    msg += `   👥 ${ch.members} members\n`;
-    msg += `   📝 ${ch.desc}\n`;
-    msg += `   🔗 @${ch.user}\n\n`;
-  });
-  msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-  msg += `👇 Tap any channel to join!`;
-  return msg;
+  return `📢 *${topicName}*\n\n👇 Tap any post below:`;
 }
 
 const TOPIC_NAMES = {
