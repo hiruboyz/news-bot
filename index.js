@@ -101,9 +101,9 @@ function formatChannelList(channels, topicName) {
 }
 
 const TOPIC_NAMES = {
-  ai: "🤖 Test-01",
-  bitcoin: "₿ Test-02",
-  tesla: "🚗 Test-03",
+  ai: " Test-01",
+  bitcoin: " Test-02",
+  tesla: " Test-03",
   openai: "🌐 Test-04",
 };
 
