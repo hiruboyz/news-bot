@@ -272,6 +272,14 @@ bot.on("callback_query", async (query) => {
       }
     );
   } else if (data === "menu") {
+
+    const mainKeys = getMainKeyboard().inline_keyboard;
+    const trendingKeys = getTrendingKeyboard().inline_keyboard;
+    const combinedKeyboard = {
+      inline_keyboard: [...trendingKeys, ...mainKeys]
+    };
+
+    
     await bot.sendMessage(chatId,
       `🔥 *Hot Topics*\n\nChoose a topic to explore channels 👇`,
       {
