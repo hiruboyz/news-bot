@@ -175,26 +175,44 @@ bot.onText(/\/start/, async (msg) => {
 
 
 
-  // Topic buttons
+//   // Topic buttons
+//   await new Promise(r => setTimeout(r, 800));
+//   await bot.sendMessage(chatId,
+//     `🔥 *Hot Topics*\n\nChoose a topic to explore channels 👇`,
+//     {
+//       parse_mode: "Markdown",
+//       reply_markup: getMainKeyboard(),
+//     }
+//   );
+
+//   // Trending keywords
+//   await new Promise(r => setTimeout(r, 800));
+//   await bot.sendMessage(chatId,
+//     `🔥 *Real-time Trending*\n\nTap any keyword to search 👇`,
+//     {
+//       parse_mode: "Markdown",
+//       reply_markup: getTrendingKeyboard(),
+//     }
+//   );
+// });
+
+
+  // Topic buttons + Trending combined
   await new Promise(r => setTimeout(r, 800));
+  
+  const mainKeys = getMainKeyboard().inline_keyboard;
+  const trendingKeys = getTrendingKeyboard().inline_keyboard;
+  const combinedKeyboard = {
+    inline_keyboard: [...trendingKeys, ...mainKeys]
+  };
+
   await bot.sendMessage(chatId,
     `🔥 *Hot Topics*\n\nChoose a topic to explore channels 👇`,
     {
       parse_mode: "Markdown",
-      reply_markup: getMainKeyboard(),
+      reply_markup: combinedKeyboard,
     }
   );
-
-  // Trending keywords
-  await new Promise(r => setTimeout(r, 800));
-  await bot.sendMessage(chatId,
-    `🔥 *Real-time Trending*\n\nTap any keyword to search 👇`,
-    {
-      parse_mode: "Markdown",
-      reply_markup: getTrendingKeyboard(),
-    }
-  );
-});
 
 // ============================
 // 🔘 BUTTON CALLBACKS
