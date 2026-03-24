@@ -213,6 +213,7 @@ bot.onText(/\/start/, async (msg) => {
       reply_markup: combinedKeyboard,
     }
   );
+  }); 
 
 // ============================
 // 🔘 BUTTON CALLBACKS
