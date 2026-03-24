@@ -1,7 +1,8 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "NIXPACKS",
+    "buildCommand": "npm i && npx playwright install chromium --with-deps"
   },
   "deploy": {
     "startCommand": "node scraper.js & node index.js",
