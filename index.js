@@ -1,5 +1,7 @@
 const TelegramBot = require("node-telegram-bot-api");
 
+const fs = require("fs");
+
 // ============================
 // 🤖 MAIN BOT TOKEN
 // ============================
@@ -74,6 +76,42 @@ function getMainKeyboard() {
   };
 }
 
+// --------------------
+
+function getTrendingKeywords() {
+  try {
+    if (fs.existsSync("trending.json")) {
+      const data = JSON.parse(fs.readFileSync("trending.json", "utf8"));
+      return data.keywords || [];
+    }
+  } catch (err) {
+    console.error("Error reading trending.json:", err.message);
+  }
+  return ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"];
+}
+
+function getTrendingKeyboard() {
+  const keywords = getTrendingKeywords();
+  const rows = [];
+  for (let i = 0; i < keywords.length; i += 2) {
+    const row = [
+      { text: keywords[i], url: `https://www.google.com/search?q=${encodeURIComponent(keywords[i])}` },
+    ];
+    if (keywords[i + 1]) {
+      row.push({
+        text: keywords[i + 1],
+        url: `https://www.google.com/search?q=${encodeURIComponent(keywords[i + 1])}`,
+      });
+    }
+    rows.push(row);
+  }
+  rows.push([{ text: "🔄 Refresh Trending", callback_data: "refresh_trending" }]);
+  return { inline_keyboard: rows };
+}
+
+
+///-/-//--//-/-/-/-/-/-/-/-/-/-/-/-/-/-/-////--/-/-/-/-/-
+
 function getChannelButtons(channels, topic) {
   const rows = channels.map(ch => ([
     { text: `${ch.name}`, url: `https://t.me/${ch.user}` }
@@ -124,6 +162,19 @@ bot.onText(/\/start/, async (msg) => {
     parse_mode: "Markdown",
   });
 
+//   // Topic buttons
+//   await new Promise(r => setTimeout(r, 800));
+//   await bot.sendMessage(chatId,
+//     `🔥 *Hot Topics*\n\nChoose a topic to explore channels 👇`,
+//     {
+//       parse_mode: "Markdown",
+//       reply_markup: getMainKeyboard(),
+//     }
+//   );
+// });
+
+
+
   // Topic buttons
   await new Promise(r => setTimeout(r, 800));
   await bot.sendMessage(chatId,
@@ -133,21 +184,59 @@ bot.onText(/\/start/, async (msg) => {
       reply_markup: getMainKeyboard(),
     }
   );
+
+  // Trending keywords
+  await new Promise(r => setTimeout(r, 800));
+  await bot.sendMessage(chatId,
+    `🔥 *Real-time Trending*\n\nTap any keyword to search 👇`,
+    {
+      parse_mode: "Markdown",
+      reply_markup: getTrendingKeyboard(),
+    }
+  );
 });
 
 // ============================
 // 🔘 BUTTON CALLBACKS
 // ============================
+// bot.on("callback_query", async (query) => {
+//   const chatId = query.message.chat.id;
+//   const data = query.data;
+//   await bot.answerCallbackQuery(query.id);
+
+//   if (data.startsWith("topic:")) {
+//     const topic = data.replace("topic:", "");
+//     const channels = CHANNELS[topic];
+//     const topicName = TOPIC_NAMES[topic];
+
+//     await bot.sendMessage(chatId,
+//       formatChannelList(channels, topicName),
+//       {
+//         parse_mode: "Markdown",
+//         reply_markup: getChannelButtons(channels, topic),
+//       }
+//     );
+
+//   } else if (data === "menu") {
+//     await bot.sendMessage(chatId,
+//       `🔥 *Hot Topics*\n\nChoose a topic to explore channels 👇`,
+//       {
+//         parse_mode: "Markdown",
+//         reply_markup: getMainKeyboard(),
+//       }
+//     );
+//   }
+// });
+
+
 bot.on("callback_query", async (query) => {
   const chatId = query.message.chat.id;
   const data = query.data;
   await bot.answerCallbackQuery(query.id);
-
   if (data.startsWith("topic:")) {
     const topic = data.replace("topic:", "");
     const channels = CHANNELS[topic];
     const topicName = TOPIC_NAMES[topic];
-
     await bot.sendMessage(chatId,
       formatChannelList(channels, topicName),
       {
@@ -155,7 +244,14 @@ bot.on("callback_query", async (query) => {
         reply_markup: getChannelButtons(channels, topic),
       }
     );
-
+  } else if (data === "refresh_trending") {   // ← ADD THIS BLOCK
+    await bot.sendMessage(chatId,
+      `🔥 *Real-time Trending*\n\nTap any keyword to search 👇`,
+      {
+        parse_mode: "Markdown",
+        reply_markup: getTrendingKeyboard(),
+      }
+    );
   } else if (data === "menu") {
     await bot.sendMessage(chatId,
       `🔥 *Hot Topics*\n\nChoose a topic to explore channels 👇`,
