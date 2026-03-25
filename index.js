@@ -106,7 +106,7 @@ function getTrendingKeyboard() {
     rows.push(row);
   }
   rows.push([{ text: "🔄 Refresh Trending", callback_data: "refresh_trending" }]);
-  rows.push([{ text: "🏠 Back to Main Menu", callback_data: "menu" }]);
+  // rows.push([{ text: "🏠 Back to Main Menu", callback_data: "menu" }]);
   return { inline_keyboard: rows };
 }
 
@@ -265,11 +265,14 @@ bot.on("callback_query", async (query) => {
       }
     );
   } else if (data === "refresh_trending") {   // ← ADD THIS BLOCK
+    const trendingKeys = getTrendingKeyboard().inline_keyboard;
+    trendingKeys.push([{ text: "🏠 Back to Main Menu", callback_data: "menu" }]);
     await bot.sendMessage(chatId,
       `🔥 *Real-time Trending*\n\nTap any keyword to search 👇`,
       {
         parse_mode: "Markdown",
-        reply_markup: getTrendingKeyboard(),
+        // reply_markup: getTrendingKeyboard(),
+        reply_markup: { inline_keyboard: trendingKeys },
       }
     );
   } else if (data === "menu") {
