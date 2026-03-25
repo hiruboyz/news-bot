@@ -284,7 +284,7 @@ bot.on("callback_query", async (query) => {
       `🔥 *Hot Topics*\n\nChoose a topic to explore channels 👇`,
       {
         parse_mode: "Markdown",
-        reply_markup: getMainKeyboard(),
+        reply_markup: combinedKeyboard,
       }
     );
   }
