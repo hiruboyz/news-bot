@@ -93,13 +93,26 @@ function getTrendingKeywords() {
 function getTrendingKeyboard() {
   const keywords = getTrendingKeywords();
   const rows = [];
+  // for (let i = 0; i < keywords.length; i += 2) {
+  //   const row = [
+  //     { text: keywords[i], url: `https://www.google.com/search?q=${encodeURIComponent(keywords[i])}` },
+  //   ];
+  //   if (keywords[i + 1]) {
+  //     row.push({
+  //       text: keywords[i + 1],
+  //       url: `https://www.google.com/search?q=${encodeURIComponent(keywords[i + 1])}`,
+  //     });
+  //   }
+  //   rows.push(row);
+  // }
+
   for (let i = 0; i < keywords.length; i += 2) {
     const row = [
-      { text: keywords[i], url: `https://www.google.com/search?q=${encodeURIComponent(keywords[i])}` },
+      { text: `${i + 1}. ${keywords[i]}`, url: `https://www.google.com/search?q=${encodeURIComponent(keywords[i])}` },
     ];
     if (keywords[i + 1]) {
       row.push({
-        text: keywords[i + 1],
+        text: `${i + 2}. ${keywords[i + 1]}`,
         url: `https://www.google.com/search?q=${encodeURIComponent(keywords[i + 1])}`,
       });
     }
