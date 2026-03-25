@@ -106,6 +106,7 @@ function getTrendingKeyboard() {
     rows.push(row);
   }
   rows.push([{ text: "🔄 Refresh Trending", callback_data: "refresh_trending" }]);
+  rows.push([{ text: "🏠 Back to Main Menu", callback_data: "menu" }]);
   return { inline_keyboard: rows };
 }
 
