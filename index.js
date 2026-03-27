@@ -235,32 +235,30 @@ bot.onText(/\/start/, async (msg) => {
 bot.onText(/\/19guide/, (msg) => {
     const chatId = msg.chat.id;
 
-    const message = `🔞 *How to Access Restricted/Sensitive Content on Telegram (iOS)*\n\n` +
+    const message = `How to Access Restricted/Sensitive Content on Telegram (iOS)
 
-        `If you see this message when trying to join a group or channel:\n\n` +
+If you encounter the following message when joining a group or channel:
 
-        `"This channel can't be displayed because it was used to spread pornographic content."\n\n` +
+"This channel can't be displayed because it was used to spread pornographic content."
 
-        `*The Reason:*\n` +
-        `The channel or group has been restricted by Telegram for containing adult or sensitive content.\n\n` +
+The Reason:
+The channel or group has been restricted by Telegram for containing adult or sensitive content.
 
-        `✅ *The Fix:*\n\n` +
+✅ The Fix:
 
-        `1️⃣ Log in to **Telegram Web**: [https://web.telegram.org](https://web.telegram.org)\n` +
-        `(Open this link in your mobile or desktop browser)\n\n` +
+Log in to Telegram Web: https://web.telegram.org (Open this link in your mobile or desktop browser).
 
-        `2️⃣ Go to **Settings**\n` +
-        `3️⃣ Select **Privacy and Security**\n` +
-        `4️⃣ Scroll down to the **Sensitive Content** section\n` +
-        `5️⃣ Enable *"Disable filtering"*\n\n` +
+Follow these steps:
+➊ Go to Settings
+➋ Select Privacy and Security
+➌ Scroll down to the Sensitive Content section
+➍ Enable "Disable filtering"
 
-        `**Restart** your Telegram app on iOS.\n\n` :
+Restart the Telegram app on your iOS device, and you should now have full access.`;
 
-        
-
-    bot.sendMessage(chatId, message, { 
+    bot.sendMessage(chatId, message, {
         parse_mode: "Markdown",
-        disable_web_page_preview: true   // Optional: hides link preview
+        disable_web_page_preview: true
     });
 });
 
