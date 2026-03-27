@@ -254,9 +254,9 @@ bot.onText(/\/19guide/, (msg) => {
         `4️⃣ Scroll down to the **Sensitive Content** section\n` +
         `5️⃣ Enable *"Disable filtering"*\n\n` +
 
-        `🔄 After that, **restart** the Telegram app on your iOS device.\n\n` +
+        `**Restart** the Telegram app on your iOS device, and you should now have full access. \n\n` :
 
-        `You should now have full access to restricted content. ✅`;
+        // `You should now have full access to restricted content. ✅`;
 
     bot.sendMessage(chatId, message, { 
         parse_mode: "Markdown",
