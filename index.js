@@ -177,7 +177,7 @@ bot.onText(/\/start/, async (msg) => {
   });
 
 // New command: /19help_19+_Restrict
-bot.onText(/\/19help_19\+_Restrict/, (msg) => {
+bot.onText(/\/19guide/, (msg) => {
     const chatId = msg.chat.id;
 
     const message = `🔞 *How to Access Restricted/Sensitive Content on Telegram (iOS)*\n\n` +
