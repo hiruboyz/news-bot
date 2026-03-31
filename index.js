@@ -66,7 +66,7 @@ function getMainKeyboard() {
     inline_keyboard: [
       [
         // { text: "美颜渲染", callback_data: "topic:ai" },BeautyFilterRendering
-        { text: "BeautyFilterRendering", callback_data: "topic:ai" },BeautyFilterRendering
+        { text: "BeautyFilterRendering", callback_data: "topic:ai" },
         { text: "极致高潮", callback_data: "topic:bitcoin" },
       ],
       [
