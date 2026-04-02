@@ -144,7 +144,7 @@ function getTrendingKeyboard() {
   }
   // Breaking news at bottom (after trending)
   if (breaking.length > 0) {
-    rows.push([{ text: "━━━━━━━━━━━━━━━", callback_data: "none" }]);
+    // rows.push([{ text: "━━━━━━━━━━━━━━━", callback_data: "none" }]);
     rows.push([{ text: "🔴 Breaking News", callback_data: "none" }]);
     breaking.forEach((news) => {
       rows.push([{ text: `📰 ${news}`, url: `https://www.google.com/search?q=${encodeURIComponent(news)}` }]);
