@@ -106,6 +106,7 @@ function getBreakingNews() {
 
 function getTrendingKeyboard() {
   const keywords = getTrendingKeywords();
+   const breaking = getBreakingNews();
   const rows = [];
   // for (let i = 0; i < keywords.length; i += 2) {
   //   const row = [
