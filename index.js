@@ -30,10 +30,10 @@ const CHANNELS = {
   ],
   bitcoin: [
     
-    { name: "🎬 CAWD-259 Uncensored Chinese [AI Decoded Version] [MAX Immersion! ", user: "postiingNew02/100" },
-    { name: "🎬 BID-021 Uncensored Chinese [VIP Member On-Demand] [AI Decoded Version]", user: "postiingNew02/101" },
-    { name: "🎬 [Chinese Subtitles] DASS-891 [The most special day in life - a wedding]", user: "postiingNew02/102" },
-    { name: "🎬 [CC] DASS-902 (You Pervert) Ancient Harlot's Obscene", user: "postiingNew02/103" },
+    { name: "🎬 🌟Bunny Garden🔞Rin-chan🌟 The incredibly accurate Bunny Garu Rin cosplay is so hot! In the cowgirl position ", user: "posting01/262" },
+    { name: "🎬 Tide x Cosplay x Tide Squirting Rapid-Fire Sex Rin Yoda", user: "posting01/295" },
+    { name: "🎬 Tide Gushing Rapid-Fire Sex Rin Yoda with Panties", user: "posting01/307" },
+    { name: "🎬 Tide Rapid-fire Cumshot Sex Rin Yoda with Panties and Photos", user: "posting01/311" },
     // { name: "🎬 IPZZ-295 突如其来的大暴风雨让胸大的女下属躲到我家，她湿透的身体让我心头一热，就这样把她弄得湿答答的。樱空桃", user: "postiingNew02/16" },
     // { name: "📈 Crypto Daily", user: "cryptodailynews", desc: "Daily crypto market updates", members: "280K" },
     // { name: "🏦 Institutional Crypto", user: "institutionalcrypto", desc: "ETF, institutional Bitcoin news", members: "95K" },
@@ -66,9 +66,9 @@ function getMainKeyboard() {
     inline_keyboard: [
       [
         // { text: "美颜渲染", callback_data: "topic:ai" },BeautyFilterRendering
-        { text: "BeautyFilterRendering", callback_data: "topic:ai" },
-        // { text: "极致高潮", callback_data: "topic:bitcoin" },
-        { text: "Perverted Woman", callback_data: "topic:bitcoin" },
+        { text: "Perverted Woman", callback_data: "topic:ai" },
+        // { text: "极致高潮", callback_data: "topic:bitcoin" },Perverted Woman
+        { text: "BeautyFilterRendering", callback_data: "topic:bitcoin" },
       ],
       [
         // { text: "电子魅魔女友", callback_data: "topic:tesla" },
