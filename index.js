@@ -20,9 +20,9 @@ const WELCOME_IMAGE = "https://raw.githubusercontent.com/hiruboyz/news-bot/main/
 const CHANNELS = {
   ai: [
      { name: "🎬 DASS-891 [The most special day in life - that's the wedding]", user: "posting_02/89" },
-    { name: "🎬 Tide x Cosplay x Tide Gushing Sex Rin Yoda with Panties and Photos", user: "posting_02/89" },
-     { name: "🎬 🌟Bunny Garden🔞 Rin-chan🌟 The highly accurate Ba-Ga Rin cosplay is incredibly hot!", user: "posting_02/89" },
-     { name: "🎬 COSH272 SougetsuNao", user: "posting_02/89" },
+    { name: "🎬 ADN-409 Unparalleled woman control, super staying power, intense insemination and intercourse by stepfather", user: "posting_02/91" },
+     { name: "🎬 ADN-762 For you, I...the sweaty young wife looking for excuses to cheat on her", user: "posting_02/93" },
+     { name: "🎬 CAWD-259 Uncensored Chinese", user: "posting_02/98" },
      // { name: "🎬 演员：匠ぷにもえ 番号：SHC105", user: "postiingNew/89" },
     // { name: "🧠 Deep Learning Hub", user: "deeplearninghub", desc: "Deep learning papers & tutorials", members: "89K" },
     // { name: "💡 Tech AI Insider", user: "techaiinsider", desc: "Big Tech AI updates from Google, Meta, Microsoft", members: "210K" },
