@@ -121,14 +121,14 @@ function getTrendingKeyboard() {
   //   rows.push(row);
   // }
 
-  // Breaking news at top
-  if (breaking.length > 0) {
-    rows.push([{ text: "🔴 Breaking News", callback_data: "none" }]);
-    breaking.forEach((news) => {
-      rows.push([{ text: `📰 ${news}`, url: `https://www.google.com/search?q=${encodeURIComponent(news)}` }]);
-    });
-    rows.push([{ text: "─────────────────", callback_data: "none" }]);
-  }
+  // // Breaking news at top
+  // if (breaking.length > 0) {
+  //   rows.push([{ text: "🔴 Breaking News", callback_data: "none" }]);
+  //   breaking.forEach((news) => {
+  //     rows.push([{ text: `📰 ${news}`, url: `https://www.google.com/search?q=${encodeURIComponent(news)}` }]);
+  //   });
+  //   rows.push([{ text: "─────────────────", callback_data: "none" }]);
+  // }
 
   for (let i = 0; i < keywords.length; i += 2) {
     const row = [
@@ -142,6 +142,15 @@ function getTrendingKeyboard() {
     }
     rows.push(row);
   }
+  // Breaking news at bottom (after trending)
+  if (breaking.length > 0) {
+    rows.push([{ text: "━━━━━━━━━━━━━━━", callback_data: "none" }]);
+    rows.push([{ text: "🔴 Breaking News", callback_data: "none" }]);
+    breaking.forEach((news) => {
+      rows.push([{ text: `📰 ${news}`, url: `https://www.google.com/search?q=${encodeURIComponent(news)}` }]);
+    });
+  }
+  
   rows.push([{ text: "🔄 Refresh Trending", callback_data: "refresh_trending" }]);
   // rows.push([{ text: "🏠 Back to Main Menu", callback_data: "menu" }]);
   return { inline_keyboard: rows };
