@@ -92,6 +92,18 @@ function getTrendingKeywords() {
   return ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"];
 }
 
+function getBreakingNews() {
+  try {
+    if (fs.existsSync("breaking.json")) {
+      const data = JSON.parse(fs.readFileSync("breaking.json", "utf8"));
+      return data.news || [];
+    }
+  } catch (err) {
+    console.error("Error reading breaking.json:", err.message);
+  }
+  return [];
+}
+
 function getTrendingKeyboard() {
   const keywords = getTrendingKeywords();
   const rows = [];
@@ -107,6 +119,15 @@ function getTrendingKeyboard() {
   //   }
   //   rows.push(row);
   // }
+
+  // Breaking news at top
+  if (breaking.length > 0) {
+    rows.push([{ text: "🔴 Breaking News", callback_data: "none" }]);
+    breaking.forEach((news) => {
+      rows.push([{ text: `📰 ${news}`, url: `https://www.google.com/search?q=${encodeURIComponent(news)}` }]);
+    });
+    rows.push([{ text: "─────────────────", callback_data: "none" }]);
+  }
 
   for (let i = 0; i < keywords.length; i += 2) {
     const row = [
